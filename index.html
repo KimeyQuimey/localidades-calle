@@ -31,6 +31,17 @@
               <option value="">Cargando...</option>
             </select>
           </div>
+
+          <!-- Cargador de Archivos -->
+          <div class="file-uploader">
+            <label for="fileUpload">O cargar GeoJSON:</label>
+            <input 
+              type="file" 
+              id="fileUpload" 
+              accept=".geojson,.json"
+              title="Selecciona un archivo GeoJSON con geometrías de líneas"
+            />
+          </div>
         </div>
 
         <div id="selectionInfo" class="selection-info hidden">

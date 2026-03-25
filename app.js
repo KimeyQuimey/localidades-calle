@@ -119,6 +119,43 @@ async function loadGeoJSON(fileName = null) {
   }
 }
 
+// Handle file upload
+function handleFileUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      geojsonData = JSON.parse(e.target.result);
+      
+      // Validate GeoJSON structure
+      if (!geojsonData.features && geojsonData.type !== "FeatureCollection") {
+        throw new Error("El archivo no es un GeoJSON válido");
+      }
+
+      displayGeoJSON();
+      cancelEdit();
+      showStatus(`${file.name} cargado correctamente`, "success");
+      
+      // Clear file input after successful load
+      document.getElementById("fileUpload").value = "";
+    } catch (error) {
+      console.error("Error parsing file:", error);
+      showStatus("Error: El archivo no es un GeoJSON válido", "error");
+      document.getElementById("fileUpload").value = "";
+    }
+  };
+
+  reader.onerror = () => {
+    console.error("Error reading file");
+    showStatus("Error al leer el archivo", "error");
+    document.getElementById("fileUpload").value = "";
+  };
+
+  reader.readAsText(file);
+}
+
 // Display GeoJSON on map
 function displayGeoJSON() {
   if (geojsonLayer) {
@@ -217,6 +254,9 @@ function setupEventListeners() {
   document.getElementById("fileSelect").addEventListener("change", () => {
     loadGeoJSON();
   });
+
+  // File upload
+  document.getElementById("fileUpload").addEventListener("change", handleFileUpload);
 
   // Form submit
   document.getElementById("editForm").addEventListener("submit", (e) => {
