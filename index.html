@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editor de Calles - GeoJSON</title>
+
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Mapa -->
+      <div id="map" class="map"></div>
+
+      <!-- Panel de Control -->
+      <div class="control-panel">
+        <div class="panel-header">
+          <h1>Editor de Calles</h1>
+          
+          <!-- Selector de Archivos -->
+          <div class="file-selector">
+            <label for="fileSelect">Archivo:</label>
+            <select id="fileSelect">
+              <option value="">Cargando...</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="selectionInfo" class="selection-info hidden">
+          <p>
+            <strong>Calle seleccionada:</strong> <span id="streetName">-</span>
+          </p>
+        </div>
+
+        <!-- Formulario de Edición -->
+        <form id="editForm" class="edit-form hidden">
+          <div class="form-group">
+            <label for="objectid">Object ID:</label>
+            <input type="text" id="objectid" readonly />
+          </div>
+
+          <div class="form-group">
+            <label for="nomvia">Nombre de la Calle:</label>
+            <input type="text" id="nomvia" placeholder="Ej: LARRABURE" />
+          </div>
+
+          <div class="form-group">
+            <label for="via">Código/Via:</label>
+            <input type="text" id="via" placeholder="Ej: 1900" />
+          </div>
+
+          <div class="form-group">
+            <label for="tipovia">Tipo de Via:</label>
+            <select id="tipovia">
+              <option value="CALLE">CALLE</option>
+              <option value="AV">AV</option>
+              <option value="PJE">PJE</option>
+              <option value="OTRO">OTRO</option>
+            </select>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <label for="highlightByCode">
+              <input type="checkbox" id="highlightByCode" />
+              Resaltar todas las calles con este código
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label for="desdei">Desde I (Altura Inicio IZQ):</label>
+            <input type="number" id="desdei" placeholder="0" value="0" />
+          </div>
+
+          <div class="form-group">
+            <label for="hastai">Hasta I (Altura Fin IZQ):</label>
+            <input type="number" id="hastai" placeholder="0" value="0" />
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-save">Guardar Cambios</button>
+            <button type="button" class="btn btn-cancel" id="cancelBtn">
+              Cancelar
+            </button>
+          </div>
+        </form>
+
+        <!-- Botones Principales -->
+        <div id="mainActions" class="main-actions">
+          <p class="info-text">
+            Haz click en una calle para editar sus atributos
+          </p>
+          <button id="exportBtn" class="btn btn-export">
+            Descargar GeoJSON
+          </button>
+        </div>
+
+        <!-- Estado -->
+        <div id="statusMessage" class="status-message"></div>
+      </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- App JS -->
+    <script src="app.js"></script>
+  </body>
+</html>
